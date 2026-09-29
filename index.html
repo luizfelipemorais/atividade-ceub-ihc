@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 1. Título do Documento -->
+    <title>Universo do Futebol - A Paixão Mundial</title>
+
+    <!-- Tailwind CSS CDN para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilização personalizada e gradiente temático de gramado/estádio */
+        body {
+            background-color: #061009;
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.15), transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+
+        .glass-card {
+            background: rgba(15, 28, 20, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Animação suave para troca de abas */
+        .tab-content {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Cabeçalho / Navbar -->
+    <header class="sticky top-0 z-40 bg-emerald-950/80 backdrop-blur-md border-b border-emerald-800/40 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="trophy" class="w-8 h-8 text-emerald-400"></i>
+                <span class="text-xl font-bold tracking-wider text-white">FUTEBOL<span class="text-emerald-400">HQ</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-semibold text-gray-300">
+                <a href="#historia" class="hover:text-emerald-400 transition">História</a>
+                <a href="#marcos" class="hover:text-emerald-400 transition">Marcos</a>
+                <a href="#curiosidades" class="hover:text-emerald-400 transition">Curiosidades</a>
+                <a href="#links" class="hover:text-emerald-400 transition">Fontes</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+
+        <!-- HERO SECTION -->
+        <section class="text-center space-y-6 pt-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-medium">
+                <i data-lucide="activity" class="w-4 h-4"></i> O Esporte Mais Popular do Planeta
+            </div>
+
+            <!-- 2. Título Principal utilizando tag de cabeçalho <h1> -->
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white">
+                Futebol: A Arte do <span class="bg-gradient-to-r from-emerald-400 to-green-300 bg-clip-text text-transparent">Jogo Bonito</span>
+            </h1>
+
+            <!-- 3. Primeiro Parágrafo -->
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 leading-relaxed">
+                Mais do que um simples jogo com uma bola e duas traves, o futebol é um fenômeno cultural global que conecta bilhões de pessoas através de barreiras de idioma, geografia e cultura. Desde os gramados consagrados do Maracanã e Camp Nou até as quadras de rua e campos de várzea, a emoção de um gol é universal.
+            </p>
+        </section>
+
+        <!-- IMAGEM COM ATRIBUTOS EXIGIDOS -->
+        <section class="relative rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/30 group">
+            <!-- 4. Imagem principal com atributos src e alt -->
+            <img 
+                src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200&auto=format&fit=crop" 
+                alt="Vista aérea de um estádio de futebol lotado à noite sob refletores brilhantes" 
+                class="w-full h-[400px] md:h-[500px] object-cover group-hover:scale-105 transition duration-700"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end p-6 md:p-8">
+                <div>
+                    <span class="text-emerald-400 text-sm font-semibold tracking-wide uppercase">A Magia dos Estádios</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mt-1">A Atmosfera Incomparável das Grandes Decisões</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- HISTÓRIA E PARÁGRAFO ADICIONAL -->
+        <section id="historia" class="glass-card p-6 md:p-8 rounded-2xl space-y-4">
+            <div class="flex items-center space-x-3 text-emerald-400">
+                <i data-lucide="book-open" class="w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-white">Origens e Evolução</h2>
+            </div>
+            
+            <!-- 3. Segundo Parágrafo -->
+            <p class="text-gray-300 leading-relaxed text-justify">
+                Embora jogos com bola nos pés fossem praticados na China Antiga (Cuju) e na Grécia Antiga, a versão moderna do futebol foi codificada na Inglaterra em 1863 com a criação da <em>Football Association</em>. A partir desse momento, as regras foram padronizadas, permitindo a rápida difusão do esporte pelo mundo através de marinheiros, trabalhadores e estudantes. Hoje, a Copa do Mundo FIFA se consolida como o evento esportivo mais assistido da Terra.
+            </p>
+        </section>
+
+        <!-- SEÇÃO COM LISTA ORDENADA E MIGRÁVEL -->
+        <section id="marcos" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i data-lucide="award" class="text-emerald-400"></i>
+                        Marcos Históricos Inesquecíveis
+                    </h2>
+                    <p class="text-gray-400 text-sm">Momentos que moldaram a história do esporte rei.</p>
+                </div>
+
+                <!-- Filtro Interativo via JS -->
+                <div class="flex gap-2 bg-emerald-950/60 p-1 rounded-xl border border-emerald-800/50 self-start">
+                    <button onclick="filterCategory('todos')" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-medium bg-emerald-500 text-black transition" id="btn-todos">Todos</button>
+                    <button onclick="filterCategory('copas')" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white transition" id="btn-copas">Copas</button>
+                    <button onclick="filterCategory('lendas')" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white transition" id="btn-lendas">Lendas</button>
+                </div>
+            </div>
+
+            <!-- 5. Lista Ordenada/Não Ordenada contendo elementos estilizados -->
+            <ol id="timeline-list" class="space-y-4">
+                <li data-cat="copas" class="glass-card p-4 rounded-xl flex items-start gap-4 hover:translate-x-1 transition duration-200">
+                    <span class="flex-shrink-0 bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-lg text-sm border border-emerald-500/30">1930</span>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">Primeira Copa do Mundo FIFA</h3>
+                        <p class="text-gray-400 text-sm">Realizada no Uruguai, a seleção anfitriã sagrou-se a primeira campeã mundial ao vencer a Argentina na final.</p>
+                    </div>
+                </li>
+
+                <li data-cat="lendas" class="glass-card p-4 rounded-xl flex items-start gap-4 hover:translate-x-1 transition duration-200">
+                    <span class="flex-shrink-0 bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-lg text-sm border border-emerald-500/30">1958</span>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">A Estreia de Pelé aos 17 Anos</h3>
+                        <p class="text-gray-400 text-sm">O Rei do Futebol encanta o mundo na Suécia e conduz o Brasil à sua primeira conquista da Copa do Mundo.</p>
+                    </div>
+                </li>
+
+                <li data-cat="copas" class="glass-card p-4 rounded-xl flex items-start gap-4 hover:translate-x-1 transition duration-200">
+                    <span class="flex-shrink-0 bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-lg text-sm border border-emerald-500/30">1970</span>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">A Seleção do Século no México</h3>
+                        <p class="text-gray-400 text-sm">Com futebol vistoso e dominante, o Brasil conquista o Tricampeonato com uma equipe lendária.</p>
+                    </div>
+                </li>
+
+                <li data-cat="lendas" class="glass-card p-4 rounded-xl flex items-start gap-4 hover:translate-x-1 transition duration-200">
+                    <span class="flex-shrink-0 bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-lg text-sm border border-emerald-500/30">1986</span>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">O Show de Diego Maradona</h3>
+                        <p class="text-gray-400 text-sm">Com o "Gol do Século" e a "Mão de Deus", Maradona lidera a Argentina rumo ao título mundial na Cidade do México.</p>
+                    </div>
+                </li>
+
+                <li data-cat="copas" class="glass-card p-4 rounded-xl flex items-start gap-4 hover:translate-x-1 transition duration-200">
+                    <span class="flex-shrink-0 bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-lg text-sm border border-emerald-500/30">2022</span>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">A Coroação de Lionel Messi</h3>
+                        <p class="text-gray-400 text-sm">Em uma das finais mais eletrizantes da história contra a França, a Argentina conquista seu tricampeonato no Catar.</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- INTERATIVIDADE: GERADOR DE CURIOSIDADES -->
+        <section id="curiosidades" class="glass-card p-6 md:p-8 rounded-2xl space-y-6 border-emerald-500/40 relative overflow-hidden">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 text-emerald-400">
+                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    <h2 class="text-2xl font-bold text-white">Você Sabia? (Gerador de Curiosidades)</h2>
+                </div>
+            </div>
+
+            <div id="fact-box" class="bg-emerald-950/60 p-6 rounded-xl border border-emerald-800/40 min-h-[100px] flex items-center justify-center text-center">
+                <p id="fact-text" class="text-lg text-emerald-200 font-medium italic">
+                    "Clique no botão abaixo para descobrir um fato impressionante sobre o futebol mundial!"
+                </p>
+            </div>
+
+            <button onclick="generateFact()" class="w-full sm:w-auto px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl flex items-center justify-center gap-2 transition transform active:scale-95 shadow-lg shadow-emerald-500/20">
+                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                Gerar Nova Curiosidade
+            </button>
+        </section>
+
+        <!-- SEÇÃO DE LINKS EXTERNOS E RECURSOS -->
+        <section id="links" class="glass-card p-6 md:p-8 rounded-2xl space-y-4">
+            <div class="flex items-center space-x-3 text-emerald-400">
+                <i data-lucide="external-link" class="w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-white">Links Recomendados</h2>
+            </div>
+            <p class="text-gray-300">
+                Para explorar estatísticas atualizadas, notícias de transferências e regulamentos oficiais do esporte, visite os portais institucionais:
+            </p>
+
+            <!-- 6 e 7. Links para outros sites utilizando href, target, rel -->
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <li>
+                    <a href="https://www.fifa.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-emerald-950/40 rounded-xl border border-emerald-800/30 hover:border-emerald-500/50 hover:bg-emerald-900/30 transition group">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="globe" class="text-emerald-400"></i>
+                            <div>
+                                <span class="font-bold text-white group-hover:text-emerald-400 transition">Site Oficial da FIFA</span>
+                                <p class="text-xs text-gray-400">Notícias e competições globais</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-emerald-400 transition"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.cbf.com.br" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-emerald-950/40 rounded-xl border border-emerald-800/30 hover:border-emerald-500/50 hover:bg-emerald-900/30 transition group">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="flag" class="text-emerald-400"></i>
+                            <div>
+                                <span class="font-bold text-white group-hover:text-emerald-400 transition">Confederação Brasileira de Futebol</span>
+                                <p class="text-xs text-gray-400">Seleção Brasileira e Brasileirão</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-emerald-400 transition"></i>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- Rodapé da Página -->
+    <footer class="mt-16 border-t border-emerald-900/40 bg-black/60 py-8 px-4 text-center text-sm text-gray-400">
+        <div class="max-w-6xl mx-auto space-y-3">
+            <div class="flex justify-center items-center gap-2 text-emerald-400 font-bold text-base">
+                <i data-lucide="trophy" class="w-5 h-5"></i> FutebolHQ
+            </div>
+            <p>&copy; 2026 Portal do Futebol. Desenvolvido com HTML5, Tailwind CSS e JavaScript.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // Inicializar ícones da biblioteca Lucide
+        lucide.createIcons();
+
+        // Array de curiosidades para o gerador
+        const curiosidades = [
+            "O gol mais rápido da história do futebol profissional foi marcado por Gavin Stokes aos 2,1 segundos de jogo em 2017.",
+            "A bola de futebol moderna é composta por gomagem geométrica, mas as primeiras bolas eram feitas de bexiga de porco revestida de couro.",
+            "A Copa do Mundo de 1950 no Maracanã registrou o maior público da história do futebol: mais de 199.000 espectadores na final.",
+            "O cartão amarelo e o cartão vermelho só foram introduzidos oficial e universalmente na Copa do Mundo de 1970.",
+            "O clube de futebol mais antigo do mundo em atividade contínua é o Sheffield Football Club, fundado em 1857 na Inglaterra.",
+            "A Seleção Brasileira é a única nacionalidade a ter participado de todas as edições da Copa do Mundo FIFA."
+        ];
+
+        function generateFact() {
+            const factText = document.getElementById('fact-text');
+            const factBox = document.getElementById('fact-box');
+            
+            // Efeito visual de atualização
+            factBox.classList.add('opacity-50');
+            
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * curiosidades.length);
+                factText.textContent = `"${curiosidades[randomIndex]}"`;
+                factBox.classList.remove('opacity-50');
+            }, 200);
+        }
+
+        // Filtro de categorias na lista de marcos
+        function filterCategory(category) {
+            const items = document.querySelectorAll('#timeline-list li');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Atualiza botões
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'text-black');
+                btn.classList.add('text-gray-300');
+            });
+
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-emerald-500', 'text-black');
+                activeBtn.classList.remove('text-gray-300');
+            }
+
+            // Exibe/oculta itens
+            items.forEach(item => {
+                const itemCat = item.getAttribute('data-cat');
+                if (category === 'todos' || itemCat === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

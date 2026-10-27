@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EA Sports FC & FUT Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        fcGold: '#E6C65A',
+                        fcGoldDark: '#997F29',
+                        fcGreen: '#00FF66',
+                        fcViolet: '#8A2BE2',
+                        fcDark: '#0A0C10',
+                        fcCardBg: '#121620',
+                        fcBorder: '#1F293D'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0C10;
+            color: #E2E8F0;
+            overflow-x: hidden;
+        }
+
+        /* FUT Card Styles */
+        .fut-card {
+            width: 290px;
+            height: 420px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            user-select: none;
+        }
+
+        .fut-card:hover {
+            transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+        }
+
+        /* Gold Card Design */
+        .card-gold {
+            background: linear-gradient(135deg, #FFE259 0%, #FFA751 100%);
+            color: #312100;
+            border: 3px solid #FFF5A5;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* TOTY Card Design */
+        .card-toty {
+            background: linear-gradient(135deg, #00223E 0%, #1D976C 100%);
+            background-image: linear-gradient(135deg, #091E3A 0%, #2B7A78 50%, #172A3A 100%);
+            color: #E0FBFC;
+            border: 3px solid #00FFF0;
+            box-shadow: 0 10px 30px rgba(0, 255, 240, 0.4);
+        }
+
+        /* Icon Card Design */
+        .card-icon {
+            background: linear-gradient(135deg, #EAEAEA 0%, #DBDBDB 50%, #B2B2B2 100%);
+            color: #222;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
+        }
+
+        /* TOTS Card Design */
+        .card-tots {
+            background: linear-gradient(135deg, #11002C 0%, #4A00E0 50%, #8E2DE2 100%);
+            color: #FFF;
+            border: 3px solid #00FFFF;
+            box-shadow: 0 10px 30px rgba(142, 45, 226, 0.5);
+        }
+
+        /* Card Holographic Effect Overlay */
+        .fut-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 13px;
+            background: linear-gradient(125deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* Pitch Grass Grid for Squad Builder */
+        .pitch-bg {
+            background: #112614;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 102, 0.08) 0%, transparent 80%),
+                linear-gradient(rgba(255, 255, 255, 0.07) 2px, transparent 2px),
+                linear-gradient(90px, rgba(255, 255, 255, 0.07) 2px, transparent 2px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0C10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F293D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FF66;
+        }
+    </style>
+</head>
+<body class="bg-fcDark text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-fcDark/90 backdrop-blur-md border-b border-fcBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
+                <div class="bg-gradient-to-tr from-fcGreen to-fcGold p-2 rounded-xl text-black font-black text-2xl tracking-tighter">
+                    FC
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-wider block leading-none">ULTIMATE<span class="text-fcGreen">HUB</span></span>
+                    <span class="text-xs text-slate-400 tracking-widest uppercase">EA Sports FC Community</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-300">
+                <a href="#card-creator" class="hover:text-fcGreen transition-colors">Card Creator</a>
+                <a href="#squad-builder" class="hover:text-fcGreen transition-colors">Squad Builder</a>
+                <a href="#news" class="hover:text-fcGreen transition-colors">News & Pitch Notes</a>
+                <a href="#modes" class="hover:text-fcGreen transition-colors">Game Modes</a>
+                <a href="#esports" class="hover:text-fcGreen transition-colors">Esports Schedule</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <button onclick="scrollToSection('card-creator')" class="bg-gradient-to-r from-fcGreen to-emerald-400 text-black font-bold px-5 py-2.5 rounded-xl hover:shadow-[0_0_20px_rgba(0,255,102,0.4)] transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Create Card
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden text-2xl text-slate-200 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-fcCardBg border-b border-fcBorder px-6 py-4 space-y-3">
+            <a href="#card-creator" class="block text-slate-300 hover:text-fcGreen py-1">Card Creator</a>
+            <a href="#squad-builder" class="block text-slate-300 hover:text-fcGreen py-1">Squad Builder</a>
+            <a href="#news" class="block text-slate-300 hover:text-fcGreen py-1">News & Pitch Notes</a>
+            <a href="#modes" class="block text-slate-300 hover:text-fcGreen py-1">Game Modes</a>
+            <a href="#esports" class="block text-slate-300 hover:text-fcGreen py-1">Esports Schedule</a>
+            <button onclick="scrollToSection('card-creator')" class="w-full mt-2 bg-fcGreen text-black font-bold py-2.5 rounded-xl">
+                Create FUT Card
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO SECTION -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-16">
+        <!-- Interactive Particle Canvas Background -->
+        <canvas id="particleCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-t from-fcDark via-transparent to-fcDark/60"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <div class="inline-flex items-center space-x-2 bg-fcBorder/60 border border-fcGreen/30 px-4 py-1.5 rounded-full text-fcGreen text-xs sm:text-sm font-semibold mb-6 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-fcGreen animate-ping"></span>
+                <span>EA Sports FC Season Live Updates</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white mb-6 leading-none">
+                BUILD YOUR <span class="bg-gradient-to-r from-fcGreen via-emerald-300 to-fcGold bg-clip-text text-transparent">LEGEND</span> ON THE PITCH
+            </h1>
+
+            <p class="max-w-3xl mx-auto text-slate-300 text-base sm:text-xl font-normal mb-10 leading-relaxed">
+                Design custom FUT 3D cards, draft unbeatable 4-3-3 squad line-ups, follow live esports tournaments, and keep up with every Pitch Note update.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button onclick="scrollToSection('card-creator')" class="w-full sm:w-auto bg-fcGreen text-black font-extrabold px-8 py-4 rounded-xl text-lg hover:bg-emerald-400 hover:shadow-[0_0_30px_rgba(0,255,102,0.5)] transition-all">
+                    <i class="fa-solid fa-square-plus mr-2"></i> FUT Card Studio
+                </button>
+                <button onclick="scrollToSection('squad-builder')" class="w-full sm:w-auto bg-fcCardBg border border-fcBorder hover:border-fcGreen text-white font-bold px-8 py-4 rounded-xl text-lg transition-all">
+                    <i class="fa-solid fa-users-gear mr-2"></i> Open Squad Builder
+                </button>
+            </div>
+
+            <!-- Stats Highlight Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="bg-fcCardBg/80 border border-fcBorder p-4 rounded-xl backdrop-blur-sm">
+                    <div class="text-2xl sm:text-3xl font-black text-fcGold">19,000+</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Licensed Players</div>
+                </div>
+                <div class="bg-fcCardBg/80 border border-fcBorder p-4 rounded-xl backdrop-blur-sm">
+                    <div class="text-2xl sm:text-3xl font-black text-fcGreen">700+</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Teams & Clubs</div>
+                </div>
+                <div class="bg-fcCardBg/80 border border-fcBorder p-4 rounded-xl backdrop-blur-sm">
+                    <div class="text-2xl sm:text-3xl font-black text-fcViolet">30+</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Global Leagues</div>
+                </div>
+                <div class="bg-fcCardBg/80 border border-fcBorder p-4 rounded-xl backdrop-blur-sm">
+                    <div class="text-2xl sm:text-3xl font-black text-emerald-400">100%</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Interactive FUT Studio</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: FUT CARD CREATOR -->
+    <section id="card-creator" class="py-20 bg-fcDark border-t border-fcBorder relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white mb-3">
+                    Ultimate Team <span class="text-fcGold">Card Creator</span>
+                </h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Customise ratings, player photos, positions, and stats to design your own high-tier FUT Card preview.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                
+                <!-- Card Customizer Controls Form -->
+                <div class="lg:col-span-7 bg-fcCardBg border border-fcBorder p-6 sm:p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-xl font-bold text-white mb-6 border-b border-fcBorder pb-3 flex items-center">
+                        <i class="fa-solid fa-sliders text-fcGreen mr-3"></i> Card Attributes & Configuration
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Card Style / Type</label>
+                            <select id="inputCardType" onchange="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                                <option value="gold">Gold Rare</option>
+                                <option value="toty">Team of the Year (TOTY)</option>
+                                <option value="icon">ICON Classic</option>
+                                <option value="tots">Team of the Season (TOTS)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Player Name</label>
+                            <input type="text" id="inputName" value="HAALAND" oninput="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Overall Rating (OVR)</label>
+                            <input type="number" id="inputOvr" value="91" min="40" max="99" oninput="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Position</label>
+                            <select id="inputPos" onchange="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                                <option value="ST">ST</option>
+                                <option value="CF">CF</option>
+                                <option value="LW">LW</option>
+                                <option value="RW">RW</option>
+                                <option value="CAM">CAM</option>
+                                <option value="CM">CM</option>
+                                <option value="CDM">CDM</option>
+                                <option value="CB">CB</option>
+                                <option value="LB">LB</option>
+                                <option value="RB">RB</option>
+                                <option value="GK">GK</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Nation Code (Emoji or Text)</label>
+                            <input type="text" id="inputNation" value="🇳🇴 NOR" oninput="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Club Short Code</label>
+                            <input type="text" id="inputClub" value="MCI" oninput="updateCard()" class="w-full bg-fcDark border border-fcBorder rounded-lg px-3 py-2 text-white focus:outline-none focus:border-fcGreen">
+                        </div>
+                    </div>
+
+                    <!-- Custom Image Upload -->
+                    <div class="mb-6">
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Player Photo Upload / URL</label>
+                        <div class="flex gap-2">
+                            <input type="file" id="inputPhotoFile" accept="image/*" onchange="handleImageUpload(event)" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-fcBorder file:text-white hover:file:bg-fcGreen hover:file:text-black cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Stats Sliders -->
+                    <h4 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4 border-b border-fcBorder pb-2">Player Core Stats</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Pace (PAC)</span>
+                                <span id="valPac" class="text-fcGreen">89</span>
+                            </div>
+                            <input type="range" id="inputPac" min="10" max="99" value="89" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Shooting (SHO)</span>
+                                <span id="valSho" class="text-fcGreen">93</span>
+                            </div>
+                            <input type="range" id="inputSho" min="10" max="99" value="93" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Passing (PAS)</span>
+                                <span id="valPas" class="text-fcGreen">66</span>
+                            </div>
+                            <input type="range" id="inputPas" min="10" max="99" value="66" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Dribbling (DRI)</span>
+                                <span id="valDri" class="text-fcGreen">80</span>
+                            </div>
+                            <input type="range" id="inputDri" min="10" max="99" value="80" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Defense (DEF)</span>
+                                <span id="valDef" class="text-fcGreen">45</span>
+                            </div>
+                            <input type="range" id="inputDef" min="10" max="99" value="45" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1">
+                                <span class="text-slate-400">Physical (PHY)</span>
+                                <span id="valPhy" class="text-fcGreen">88</span>
+                            </div>
+                            <input type="range" id="inputPhy" min="10" max="99" value="88" oninput="updateCard()" class="w-full accent-fcGreen">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Card Display Area -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div id="futCard" class="fut-card card-gold flex flex-col justify-between p-5 shadow-2xl overflow-hidden relative">
+                        
+                        <!-- Top Header: Rating, Position, Flags -->
+                        <div class="flex justify-between items-start z-10">
+                            <div class="flex flex-col items-center">
+                                <span id="cardOvr" class="text-4xl font-black leading-none tracking-tighter">91</span>
+                                <span id="cardPos" class="text-lg font-bold uppercase tracking-wide">ST</span>
+                                <div class="w-6 h-0.5 bg-current my-1 opacity-40"></div>
+                                <span id="cardNation" class="text-xs font-extrabold uppercase mt-0.5">🇳🇴 NOR</span>
+                                <span id="cardClub" class="text-xs font-extrabold uppercase">MCI</span>
+                            </div>
+                            
+                            <!-- Player Avatar Photo -->
+                            <div class="w-40 h-44 relative overflow-hidden flex items-end justify-center">
+                                <img id="cardPhoto" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80" alt="Player Photo" class="object-cover h-full w-full object-top drop-shadow-[0_10px_8px_rgba(0,0,0,0.5)]">
+                            </div>
+                        </div>
+
+                        <!-- Player Name Bar -->
+                        <div class="z-10 text-center my-1 border-t border-b border-current/20 py-1">
+                            <h3 id="cardName" class="text-xl font-black uppercase tracking-wider truncate">HAALAND</h3>
+                        </div>
+
+                        <!-- Bottom Attributes Grid -->
+                        <div class="z-10 grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-bold px-2 mb-2">
+                            <div class="flex justify-between">
+                                <span id="cardPacVal" class="font-extrabold">89</span>
+                                <span class="opacity-80">PAC</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="cardDriVal" class="font-extrabold">80</span>
+                                <span class="opacity-80">DRI</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="cardShoVal" class="font-extrabold">93</span>
+                                <span class="opacity-80">SHO</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="cardDefVal" class="font-extrabold">45</span>
+                                <span class="opacity-80">DEF</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="cardPasVal" class="font-extrabold">66</span>
+                                <span class="opacity-80">PAS</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="cardPhyVal" class="font-extrabold">88</span>
+                                <span class="opacity-80">PHY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500 mt-4"><i class="fa-solid fa-arrows-spin mr-1"></i> Hover over the card to view dynamic 3D tilt effects</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SQUAD BUILDER (4-3-3 FORMATION) -->
+    <section id="squad-builder" class="py-20 bg-fcDark/50 border-t border-fcBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white mb-2">
+                        Tactical <span class="text-fcGreen">Squad Draft</span>
+                    </h2>
+                    <p class="text-slate-400">4-3-3 Attack Formation Pitch Grid - Click player slots to edit squad details.</p>
+                </div>
+                
+                <!-- Chemistry Indicator -->
+                <div class="mt-4 md:mt-0 flex items-center space-x-6 bg-fcCardBg border border-fcBorder px-6 py-3 rounded-xl">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-bold block">Team Rating</span>
+                        <span class="text-2xl font-black text-fcGold">88 OVR</span>
+                    </div>
+                    <div class="h-8 w-px bg-fcBorder"></div>
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase font-bold block">Team Chemistry</span>
+                        <span class="text-2xl font-black text-fcGreen"><i class="fa-solid fa-bolt mr-1"></i> 33 / 33</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pitch Canvas Board -->
+            <div class="pitch-bg rounded-3xl p-6 sm:p-10 shadow-2xl relative min-h-[600px] flex flex-col justify-between overflow-hidden">
+                
+                <!-- FORWARDS (LW, ST, RW) -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <!-- LW -->
+                    <div onclick="editSquadPlayer('LW')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">89</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-ninja text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-LW" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">VINI JR</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">LW</span>
+                    </div>
+
+                    <!-- ST -->
+                    <div onclick="editSquadPlayer('ST')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">91</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-astronaut text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-ST" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">HAALAND</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">ST</span>
+                    </div>
+
+                    <!-- RW -->
+                    <div onclick="editSquadPlayer('RW')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">90</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-bolt text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-RW" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">SALAH</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">RW</span>
+                    </div>
+                </div>
+
+                <!-- MIDFIELDERS (CM, CAM, CM) -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <!-- LCM -->
+                    <div onclick="editSquadPlayer('LCM')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">91</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-tie text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-LCM" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">DE BRUYNE</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">CM</span>
+                    </div>
+
+                    <!-- CAM -->
+                    <div onclick="editSquadPlayer('CAM')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">90</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-shield text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-CAM" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">BELLINGHAM</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">CAM</span>
+                    </div>
+
+                    <!-- RCM -->
+                    <div onclick="editSquadPlayer('RCM')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">88</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-graduate text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-RCM" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">VALVERDE</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">CM</span>
+                    </div>
+                </div>
+
+                <!-- DEFENDERS (LB, CB, CB, RB) -->
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 mb-6">
+                    <!-- LB -->
+                    <div onclick="editSquadPlayer('LB')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-14 h-18 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">86</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-LB" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">HERNANDEZ</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">LB</span>
+                    </div>
+
+                    <!-- LCB -->
+                    <div onclick="editSquadPlayer('LCB')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-14 h-18 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">89</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-gear text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-LCB" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">VAN DIJK</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">CB</span>
+                    </div>
+
+                    <!-- RCB -->
+                    <div onclick="editSquadPlayer('RCB')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-14 h-18 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">88</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-RCB" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">DIAS</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">CB</span>
+                    </div>
+
+                    <!-- RB -->
+                    <div onclick="editSquadPlayer('RB')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-14 h-18 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">87</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-RB" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">WALKER</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">RB</span>
+                    </div>
+                </div>
+
+                <!-- GOALKEEPER -->
+                <div class="flex justify-center">
+                    <div onclick="editSquadPlayer('GK')" class="flex flex-col items-center cursor-pointer group">
+                        <div class="w-16 h-20 sm:w-20 sm:h-28 bg-fcCardBg/90 border-2 border-fcGold rounded-lg flex flex-col justify-between p-2 shadow-lg group-hover:scale-105 transition-transform">
+                            <span class="text-xs font-black text-fcGold">89</span>
+                            <div class="text-center">
+                                <i class="fa-solid fa-hand text-slate-400 text-lg sm:text-2xl"></i>
+                            </div>
+                            <span id="name-GK" class="text-[10px] sm:text-xs font-bold text-center truncate w-full text-white">ALISSON</span>
+                        </div>
+                        <span class="text-[10px] font-bold bg-black/60 text-fcGreen px-2 py-0.5 rounded mt-1">GK</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: NEWS & PITCH NOTES -->
+    <section id="news" class="py-20 bg-fcDark border-t border-fcBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white mb-2">
+                        Pitch Notes & <span class="text-fcViolet">News</span>
+                    </h2>
+                    <p class="text-slate-400">Latest title updates, dynamic promo releases, and developer squad balances.</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap gap-2 mt-4 md:mt-0">
+                    <button onclick="filterNews('all')" class="news-tab bg-fcGreen text-black font-bold px-4 py-2 rounded-lg text-xs uppercase transition-colors">All</button>
+                    <button onclick="filterNews('updates')" class="news-tab bg-fcCardBg hover:bg-fcBorder text-slate-300 font-bold px-4 py-2 rounded-lg text-xs uppercase transition-colors">Title Updates</button>
+                    <button onclick="filterNews('promos')" class="news-tab bg-fcCardBg hover:bg-fcBorder text-slate-300 font-bold px-4 py-2 rounded-lg text-xs uppercase transition-colors">FUT Promos</button>
+                    <button onclick="filterNews('esports')" class="news-tab bg-fcCardBg hover:bg-fcBorder text-slate-300 font-bold px-4 py-2 rounded-lg text-xs uppercase transition-colors">Esports</button>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="news-item updates bg-fcCardBg border border-fcBorder rounded-2xl overflow-hidden hover:border-fcGreen transition-all flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Title Update">
+                        <span class="absolute top-3 left-3 bg-fcGreen text-black font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-md">Title Update 8</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 block mb-2">October 24, 2026 • Developer Team</span>
+                            <h3 class="text-lg font-bold text-white mb-2 hover:text-fcGreen cursor-pointer">Live Tuning Update: Dynamic Passing & Precision Shooting adjustments</h3>
+                            <p class="text-slate-400 text-sm">Enhanced responsiveness for playstyles, adjusted goalkeeper AI positioning on long range fineses.</p>
+                        </div>
+                        <a href="#" class="mt-4 inline-flex items-center text-xs font-bold text-fcGreen uppercase tracking-wider hover:underline">Read Pitch Notes <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="news-item promos bg-fcCardBg border border-fcBorder rounded-2xl overflow-hidden hover:border-fcGold transition-all flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Promo">
+                        <span class="absolute top-3 left-3 bg-fcGold text-black font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-md">Ultimate Team</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 block mb-2">October 22, 2026 • FUT Promo</span>
+                            <h3 class="text-lg font-bold text-white mb-2 hover:text-fcGold cursor-pointer">Centurions Team 1 Announced featuring boosted PlayStyle+ upgrades</h3>
+                            <p class="text-slate-400 text-sm">Celebrate club centurions with special upgraded items available now in Ultimate Team packs.</p>
+                        </div>
+                        <a href="#" class="mt-4 inline-flex items-center text-xs font-bold text-fcGold uppercase tracking-wider hover:underline">Explore Team 1 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="news-item esports bg-fcCardBg border border-fcBorder rounded-2xl overflow-hidden hover:border-fcViolet transition-all flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Esports">
+                        <span class="absolute top-3 left-3 bg-fcViolet text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-md">FC Pro World Championship</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 block mb-2">October 19, 2026 • Competitive</span>
+                            <h3 class="text-lg font-bold text-white mb-2 hover:text-fcViolet cursor-pointer">FC Pro Open Global Qualifiers Bracket & Schedule Revealed</h3>
+                            <p class="text-slate-400 text-sm">64 world-class players battle for a $1,000,000 prize pool. Check the key match timings.</p>
+                        </div>
+                        <a href="#" class="mt-4 inline-flex items-center text-xs font-bold text-fcViolet uppercase tracking-wider hover:underline">View Schedule <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: GAME MODES OVERVIEW -->
+    <section id="modes" class="py-20 bg-fcDark/50 border-t border-fcBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white mb-3">
+                    Experience Every <span class="text-fcGreen">Game Mode</span>
+                </h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">From managing your dream squad to street football setups, explore the main ways to play.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Ultimate Team -->
+                <div class="bg-fcCardBg border border-fcBorder p-6 rounded-2xl hover:border-fcGold transition-all transform hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-fcGold/10 rounded-xl flex items-center justify-center text-fcGold text-2xl mb-6 group-hover:bg-fcGold group-hover:text-black transition-colors">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Ultimate Team</h3>
+                    <p class="text-slate-400 text-sm mb-4">Build your dream XI from thousands of current players and legendary ICONs in Squad Battles, Rivals & Champions.</p>
+                    <span class="text-xs font-bold text-fcGold uppercase tracking-wider">PlayStyle+ & Evolutions</span>
+                </div>
+
+                <!-- Career Mode -->
+                <div class="bg-fcCardBg border border-fcBorder p-6 rounded-2xl hover:border-fcGreen transition-all transform hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-fcGreen/10 rounded-xl flex items-center justify-center text-fcGreen text-2xl mb-6 group-hover:bg-fcGreen group-hover:text-black transition-colors">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Career Mode</h3>
+                    <p class="text-slate-400 text-sm mb-4">Write your football story as a Manager leading top clubs to glory, or craft your path as a Player Icon.</p>
+                    <span class="text-xs font-bold text-fcGreen uppercase tracking-wider">Tactical Visions & Youth Academy</span>
+                </div>
+
+                <!-- Clubs -->
+                <div class="bg-fcCardBg border border-fcBorder p-6 rounded-2xl hover:border-fcViolet transition-all transform hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-fcViolet/10 rounded-xl flex items-center justify-center text-fcViolet text-2xl mb-6 group-hover:bg-fcViolet group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Clubs</h3>
+                    <p class="text-slate-400 text-sm mb-4">Team up with friends online in 11v11 online matches. Level up your Pro with custom traits and progression.</p>
+                    <span class="text-xs font-bold text-fcViolet uppercase tracking-wider">Cross-Play Seasons</span>
+                </div>
+
+                <!-- VOLTA FOOTBALL -->
+                <div class="bg-fcCardBg border border-fcBorder p-6 rounded-2xl hover:border-pink-500 transition-all transform hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center text-pink-500 text-2xl mb-6 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">VOLTA Football</h3>
+                    <p class="text-slate-400 text-sm mb-4">Take the game back to the streets with small-sided games, custom avatars, stylish apparel, and arcade mini-games.</p>
+                    <span class="text-xs font-bold text-pink-500 uppercase tracking-wider">Street Flair & Custom Arenas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: TOURNAMENTS & ESPORTS SCHEDULE -->
+    <section id="esports" class="py-20 bg-fcDark border-t border-fcBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white mb-2">
+                        Esports & <span class="text-fcGold">Tournaments</span>
+                    </h2>
+                    <p class="text-slate-400">Track upcoming live competitive events and global championships.</p>
+                </div>
+
+                <!-- Event Filter -->
+                <div class="mt-4 md:mt-0">
+                    <select id="tournamentFilter" onchange="filterTournaments()" class="bg-fcCardBg border border-fcBorder text-white text-xs font-bold rounded-lg px-4 py-2.5 focus:outline-none focus:border-fcGreen">
+                        <option value="all">All Tournaments</option>
+                        <option value="live">Live Now</option>
+                        <option value="upcoming">Upcoming</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="bg-fcCardBg border border-fcBorder rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-fcBorder/50 text-slate-400 text-xs uppercase tracking-wider">
+                            <tr>
+                                <th class="py-4 px-6">Event Title</th>
+                                <th class="py-4 px-6">Stage</th>
+                                <th class="py-4 px-6">Date & Time</th>
+                                <th class="py-4 px-6">Prize Pool</th>
+                                <th class="py-4 px-6 text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tournamentTable" class="divide-y divide-fcBorder/60">
+                            <!-- Row 1 -->
+                            <tr class="t-row live hover:bg-fcBorder/30 transition-colors">
+                                <td class="py-4 px-6 font-bold text-white flex items-center space-x-3">
+                                    <i class="fa-solid fa-gamepad text-fcGreen text-lg"></i>
+                                    <span>FC Pro Open - Matchday 4</span>
+                                </td>
+                                <td class="py-4 px-6">Group Stage</td>
+                                <td class="py-4 px-6">TODAY, 18:00 GMT</td>
+                                <td class="py-4 px-6 font-semibold text-fcGold">$500,000</td>
+                                <td class="py-4 px-6 text-right">
+                                    <span class="inline-flex items-center bg-red-500/10 border border-red-500/40 text-red-400 text-xs font-bold px-2.5 py-1 rounded-full animate-pulse">
+                                        <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span> LIVE NOW
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="t-row upcoming hover:bg-fcBorder/30 transition-colors">
+                                <td class="py-4 px-6 font-bold text-white flex items-center space-x-3">
+                                    <i class="fa-solid fa-trophy text-fcGold text-lg"></i>
+                                    <span>ePremier League Finals</span>
+                                </td>
+                                <td class="py-4 px-6">Grand Finals</td>
+                                <td class="py-4 px-6">NOV 14, 2026</td>
+                                <td class="py-4 px-6 font-semibold text-fcGold">£100,000</td>
+                                <td class="py-4 px-6 text-right">
+                                    <span class="bg-fcBorder text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full">UPCOMING</span>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr class="t-row upcoming hover:bg-fcBorder/30 transition-colors">
+                                <td class="py-4 px-6 font-bold text-white flex items-center space-x-3">
+                                    <i class="fa-solid fa-earth-americas text-fcViolet text-lg"></i>
+                                    <span>FC Champions Cup</span>
+                                </td>
+                                <td class="py-4 px-6">Regional Playoffs</td>
+                                <td class="py-4 px-6">DEC 02, 2026</td>
+                                <td class="py-4 px-6 font-semibold text-fcGold">$250,000</td>
+                                <td class="py-4 px-6 text-right">
+                                    <span class="bg-fcBorder text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full">UPCOMING</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER WITH LUIZ FELIPE MARQUEZ CREDIT -->
+    <footer class="bg-fcDark border-t border-fcBorder pt-16 pb-12 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <!-- Brand Info -->
+                <div class="flex flex-col items-center md:items-start space-y-3">
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
+                        <div class="bg-gradient-to-tr from-fcGreen to-fcGold p-2 rounded-xl text-black font-black text-xl">
+                            FC
+                        </div>
+                        <span class="font-extrabold text-xl text-white tracking-wider">ULTIMATE<span class="text-fcGreen">HUB</span></span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm text-center md:text-left">
+                        Plataforma interativa para criação de cartas FUT 3D, montagem de elencos e notícias do mundo EA Sports FC.
+                    </p>
+                </div>
+
+                <!-- Creator Badge -->
+                <div class="bg-fcCardBg border border-fcGreen/30 px-6 py-4 rounded-2xl flex items-center space-x-4 shadow-[0_0_20px_rgba(0,255,102,0.15)]">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-fcGreen to-fcGold p-0.5 flex items-center justify-center">
+                        <div class="w-full h-full bg-fcDark rounded-full flex items-center justify-center text-fcGreen font-black text-lg">
+                            LM
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest block">Desenvolvido Por</span>
+                        <h4 class="text-lg font-black text-white bg-gradient-to-r from-fcGreen via-white to-fcGold bg-clip-text text-transparent">
+                            Luiz Felipe Marquez
+                        </h4>
+                    </div>
+                </div>
+
+                <!-- Social Links & Back To Top -->
+                <div class="flex flex-col items-center md:items-end space-y-4">
+                    <div class="flex space-x-4 text-slate-300">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-fcCardBg border border-fcBorder flex items-center justify-center hover:text-fcGreen hover:border-fcGreen transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-fcCardBg border border-fcBorder flex items-center justify-center hover:text-fcGreen hover:border-fcGreen transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-fcCardBg border border-fcBorder flex items-center justify-center hover:text-fcGreen hover:border-fcGreen transition-colors"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-fcCardBg border border-fcBorder flex items-center justify-center hover:text-fcGreen hover:border-fcGreen transition-colors"><i class="fa-brands fa-discord"></i></a>
+                    </div>
+                    <button onclick="scrollToSection('hero')" class="text-xs font-bold text-slate-400 hover:text-fcGreen flex items-center transition-colors">
+                        Voltar ao topo <i class="fa-solid fa-arrow-up ml-2 bg-fcCardBg p-2 rounded-lg border border-fcBorder"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Disclaimer Bar -->
+            <div class="border-t border-fcBorder/60 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Luiz Felipe Marquez. Todos os direitos reservados. Site criado para fãs de futebol e EA Sports FC.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:underline">Termos</a>
+                    <a href="#" class="hover:underline">Privacidade</a>
+                    <a href="#" class="hover:underline">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Particle Background Animation Loop
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.color = Math.random() > 0.5 ? '#00FF66' : '#E6C65A';
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 65; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize particles on window load
+        window.onload = function() {
+            initParticles();
+            animateParticles();
+        };
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll Utility
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // FUT Card Creator Dynamic Controls
+        function updateCard() {
+            const cardType = document.getElementById('inputCardType').value;
+            const name = document.getElementById('inputName').value || 'PLAYER';
+            const ovr = document.getElementById('inputOvr').value || '90';
+            const pos = document.getElementById('inputPos').value;
+            const nation = document.getElementById('inputNation').value || 'NATION';
+            const club = document.getElementById('inputClub').value || 'CLUB';
+
+            const pac = document.getElementById('inputPac').value;
+            const sho = document.getElementById('inputSho').value;
+            const pas = document.getElementById('inputPas').value;
+            const dri = document.getElementById('inputDri').value;
+            const def = document.getElementById('inputDef').value;
+            const phy = document.getElementById('inputPhy').value;
+
+            // Update UI Card Text
+            document.getElementById('cardName').innerText = name.toUpperCase();
+            document.getElementById('cardOvr').innerText = ovr;
+            document.getElementById('cardPos').innerText = pos;
+            document.getElementById('cardNation').innerText = nation;
+            document.getElementById('cardClub').innerText = club;
+
+            // Update Stats UI Text
+            document.getElementById('cardPacVal').innerText = pac;
+            document.getElementById('cardShoVal').innerText = sho;
+            document.getElementById('cardPasVal').innerText = pas;
+            document.getElementById('cardDriVal').innerText = dri;
+            document.getElementById('cardDefVal').innerText = def;
+            document.getElementById('cardPhyVal').innerText = phy;
+
+            // Update Slider Labels
+            document.getElementById('valPac').innerText = pac;
+            document.getElementById('valSho').innerText = sho;
+            document.getElementById('valPas').innerText = pas;
+            document.getElementById('valDri').innerText = dri;
+            document.getElementById('valDef').innerText = def;
+            document.getElementById('valPhy').innerText = phy;
+
+            // Apply Theme Style Classes
+            const card = document.getElementById('futCard');
+            card.className = 'fut-card flex flex-col justify-between p-5 shadow-2xl overflow-hidden relative ';
+            if (cardType === 'gold') card.classList.add('card-gold');
+            else if (cardType === 'toty') card.classList.add('card-toty');
+            else if (cardType === 'icon') card.classList.add('card-icon');
+            else if (cardType === 'tots') card.classList.add('card-tots');
+        }
+
+        // Image Upload Handler
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('cardPhoto').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Squad Builder Interactive Editing
+        function editSquadPlayer(pos) {
+            const newName = prompt(`Enter player name for position [${pos}]:`);
+            if (newName && newName.trim() !== '') {
+                const target = document.getElementById(`name-${pos}`);
+                if (target) {
+                    target.innerText = newName.toUpperCase();
+                }
+            }
+        }
+
+        // News Tab Filter
+        function filterNews(category) {
+            const items = document.querySelectorAll('.news-item');
+            const tabs = document.querySelectorAll('.news-tab');
+
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-fcGreen', 'text-black');
+                tab.classList.add('bg-fcCardBg', 'text-slate-300');
+            });
+
+            event.target.classList.remove('bg-fcCardBg', 'text-slate-300');
+            event.target.classList.add('bg-fcGreen', 'text-black');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Esports Tournament Table Filter
+        function filterTournaments() {
+            const filter = document.getElementById('tournamentFilter').value;
+            const rows = document.querySelectorAll('.t-row');
+
+            rows.forEach(row => {
+                if (filter === 'all' || row.classList.contains(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

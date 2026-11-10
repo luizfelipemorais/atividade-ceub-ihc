@@ -1,0 +1,146 @@
+const campoIdade = document.getElementById("idade");
+const botaoIdade = document.getElementById("verificar");
+const resultadoIdade = document.getElementById("resultado");
+
+if (botaoIdade) {
+    botaoIdade.addEventListener("click", function () {
+        const texto = campoIdade.value.trim();
+
+        if (texto === "") {
+            resultadoIdade.textContent = "Informe a idade.";
+            return;
+        }
+
+        const idade = Number(texto);
+
+        if (!Number.isInteger(idade) || idade < 0 || idade > 120) {
+            resultadoIdade.textContent = "Idade inválida.";
+            return;
+        }
+
+        if (idade >= 18) {
+            resultadoIdade.textContent = "Maior de idade.";
+        } else {
+            const anosFaltam = 18 - idade;
+            resultadoIdade.textContent = "Menor de idade. Faltam " + anosFaltam + " anos para completar 18.";
+        }
+    });
+}
+
+const botaoCalcular = document.getElementById("calcular");
+const saidaMedia = document.getElementById("resultadoMedia");
+
+if (botaoCalcular) {
+    botaoCalcular.addEventListener("click", function () {
+        const t1 = document.getElementById("n1").value.trim();
+        const t2 = document.getElementById("n2").value.trim();
+        const t3 = document.getElementById("n3").value.trim();
+
+        if (t1 === "" || t2 === "" || t3 === "") {
+            saidaMedia.textContent = "Erro: preencha todos os campos.";
+            return;
+        }
+
+        const n1 = Number(t1);
+        const n2 = Number(t2);
+        const n3 = Number(t3);
+
+        if (!Number.isFinite(n1) || n1 < 0 || n1 > 10) {
+            saidaMedia.textContent = "Erro: a Nota 1 (" + t1 + ") é inválida.";
+            return;
+        }
+
+        if (!Number.isFinite(n2) || n2 < 0 || n2 > 10) {
+            saidaMedia.textContent = "Erro: a Nota 2 (" + t2 + ") é inválida.";
+            return;
+        }
+
+        if (!Number.isFinite(n3) || n3 < 0 || n3 > 10) {
+            saidaMedia.textContent = "Erro: a Nota 3 (" + t3 + ") é inválida.";
+            return;
+        }
+
+        const media = (n1 + n2 + n3) / 3;
+
+        if (media >= 6) {
+            saidaMedia.textContent = "Média " + media.toFixed(2) + " - Aprovado";
+        } else {
+            saidaMedia.textContent = "Média " + media.toFixed(2) + " - Recuperação";
+        }
+    });
+}
+
+console.log("--- Exercício 1: Par ou Ímpar ---");
+function testarParImpar(numero) {
+    if (numero % 2 === 0) {
+        console.log(numero + " é par");
+    } else {
+        console.log(numero + " é ímpar");
+    }
+}
+testarParImpar(8);
+testarParImpar(11);
+
+console.log("\n--- Exercício 2: Desconto ---");
+function calcularDesconto(valorCompra) {
+    let total = valorCompra;
+    if (valorCompra >= 200) {
+        total = valorCompra - (valorCompra * 0.10);
+    }
+    console.log("Compra de R$ " + valorCompra + " -> Total a pagar: R$ " + total);
+}
+calcularDesconto(199);
+calcularDesconto(200);
+
+console.log("\n--- Exercício 3: Acesso ao Sistema ---");
+function verificarAcesso(idade, cadastroAtivo) {
+    if (idade >= 18 && cadastroAtivo === true) {
+        console.log("Idade: " + idade + ", Ativo: " + cadastroAtivo + " -> Acesso permitido ao sistema.");
+    } else {
+        console.log("Idade: " + idade + ", Ativo: " + cadastroAtivo + " -> Acesso negado.");
+    }
+}
+verificarAcesso(20, true);
+verificarAcesso(17, true);
+verificarAcesso(20, false);
+
+const campoNome = document.getElementById("nome");
+const btnSaudar = document.getElementById("btnSaudar");
+const mensagemSaudacao = document.getElementById("mensagemSaudacao");
+
+if (btnSaudar) {
+    btnSaudar.addEventListener("click", function () {
+        const nome = campoNome.value.trim();
+
+        if (nome === "") {
+            mensagemSaudacao.textContent = "Por favor, preencha o seu nome!";
+        } else {
+            mensagemSaudacao.textContent = "Olá, " + nome + "!";
+        }
+    });
+}
+
+const campoTemp = document.getElementById("temp");
+const btnTemp = document.getElementById("btnVerificarTemp");
+const resultadoTemp = document.getElementById("resultadoTemp");
+
+if (btnTemp) {
+    btnTemp.addEventListener("click", function () {
+        const texto = campoTemp.value.trim();
+
+        if (texto === "") {
+            resultadoTemp.textContent = "Digite uma temperatura.";
+            return;
+        }
+
+        const temp = Number(texto);
+
+        if (temp < 18) {
+            resultadoTemp.textContent = "Frio";
+        } else if (temp >= 18 && temp < 28) {
+            resultadoTemp.textContent = "Agradável";
+        } else {
+            resultadoTemp.textContent = "Quente";
+        }
+    });
+}

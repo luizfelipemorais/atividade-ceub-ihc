@@ -21,3 +21,8 @@ const situacao = verificarSituacao(media);
 console.log("Estudante:", nomeEstudante);
 console.log("Média:", media.toFixed(1));
 console.log("Situação:", situacao);
+function calcularMedia(nota1, nota2, nota3) {
+ return (nota1 + nota2 + nota3) / 3;
+}
+function verificarSituacao(media) {
+ if (media >= 7) return "Aprovado";
